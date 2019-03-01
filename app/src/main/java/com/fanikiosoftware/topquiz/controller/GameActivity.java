@@ -2,8 +2,10 @@ package com.fanikiosoftware.topquiz.controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -23,12 +25,21 @@ import static java.lang.System.out;
 
 public class GameActivity extends AppCompatActivity implements OnClickListener {
 
-    public final static String BUNDLE_EXTRA_SCORE =
-            GameActivity.class.getCanonicalName().concat("BUNDLE_EXTRA_SCORE");
     public static final String BUNDLE_STATE_SCORE =
             GameActivity.class.getCanonicalName().concat("BUNDLE_STATE_SCORE");
     public static final String BUNDLE_STATE_QUESTIONS =
             GameActivity.class.getCanonicalName().concat("BUNDLE_STATE_QUESTIONS");
+     public static final String PREF_KEY_SCORE = "PREFERENCE_KEY_SCORE";
+//    public static final String PREF_KEY_SCORE1 = "PREFERENCE_KEY_SCORE1";
+//    public static final String PREF_KEY_SCORE2 = "PREFERENCE_KEY_SCORE2";
+//    public static final String PREF_KEY_SCORE3 = "PREFERENCE_KEY_SCORE3";
+//    public static final String PREF_KEY_SCORE4 = "PREFERENCE_KEY_SCORE4";
+//    public static final String PREF_KEY_SCORE5 = "PREFERENCE_KEY_SCORE5";
+//    public static final String PREF_KEY_NAME1 = "PREFERENCE_KEY_NAME1";
+//    public static final String PREF_KEY_NAME2 = "PREFERENCE_KEY_NAME2";
+//    public static final String PREF_KEY_NAME3 = "PREFERENCE_KEY_NAME3";
+//    public static final String PREF_KEY_NAME4 = "PREFERENCE_KEY_NAME4";
+//    public static final String PREF_KEY_NAME5 = "PREFERENCE_KEY_NAME5";
 
     private TextView mQuestionTextView;
     private Button mAnswerBtn1;
@@ -41,19 +52,21 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     private int mScore;
     private int mNumQuestions;
     private boolean mEnableTouchEvents;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        out.println("GameActivity::onCreate");
-        mQuestionBank = this.generateQuestions();
-       //has data been persisted? if so, get data (score and questions)
+        out.println("GameActivity::onCreate()");
+        mQuestionBank = this.generateQuestions(); //returns QuestionBank obj -> List of questions
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //has data been persisted? if so, get data (score and questions)
         if (savedInstanceState != null) {
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
-            out.println("GameActivity::onCreate() score: " + mScore);
             mNumQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTIONS);
         } else {
+            //no saved data on record
             mScore = 0;
             mNumQuestions = 4;
         }
@@ -87,7 +100,6 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         @Override
         protected void onSaveInstanceState(Bundle outState) {
             outState.putInt(BUNDLE_STATE_SCORE, mScore);
-            out.println("GameActivity::onSaveInstanceState " + mScore);
             outState.putInt(BUNDLE_STATE_QUESTIONS, mNumQuestions);
             super.onSaveInstanceState(outState);
         }
@@ -109,11 +121,13 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
             int userAnswer  = (int) v.getTag();
             if (userAnswer == mCurrentQuestion.getAnswerIndex()) {
                 //user answer is correct
-                Toast.makeText(GameActivity.this, "Good job! That's correct", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, "Good job! That's correct",
+                        Toast.LENGTH_SHORT).show();
                 mScore++;
             } else {
                 // incorrect answer
-                Toast.makeText(GameActivity.this, "Oops! Wrong answer!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GameActivity.this, "Oops! Wrong answer!",
+                        Toast.LENGTH_SHORT).show();
             }
             mEnableTouchEvents = false;
             new Handler().postDelayed(new Runnable() {
@@ -136,29 +150,28 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
         //region generate questions
         public QuestionBank generateQuestions () {
-            Question question1 = new Question("T'Challa is the king of Wakanda. What was the " +
-                    "previous king, T'Challa's father, called?",
+            Question question1 = new Question("T'Challa is the king of Wakanda. " +
+                    "What was the previous king, T'Challa's father, called?",
                     Arrays.asList("Azzuir the Wise", "S'Yan", "T'Chaka", "T'Challa the First"),
                     2);
 
-            Question question2 = new Question("Wakanda is so technologically advanced because of " +
-                    "vibranium. BUT, how did it get all of the precious metal?",
+            Question question2 = new Question("Wakanda is so technologically advanced" +
+                    " because of vibranium. BUT, how did it get all of the precious metal?",
                     Arrays.asList("It hit Wakanda in the form of an asteroid",
                             "It was created by an ancient form of magic",
                             "It was made by a mountain growing around an Infinity Stone",
-                            "It was sent back in time by a future Black Panther"),
-                    0);
+                            "It was sent back in time by a future Black Panther"),0);
 
-            Question question3 = new Question("Where was Erik Killmonger - or N'Jadaka - brought up as a child?",
-                    Arrays.asList("Paris", "California", "Wakanda", "Singapore"),
-                    1);
+            Question question3 = new Question("Where was Erik Killmonger - or N'Jadaka - " +
+                    "brought up as a child?",
+                    Arrays.asList("Paris", "California", "Wakanda", "Singapore"),1);
 
-            Question question4 = new Question("What is the name of the elite all-women bodyguard squad commanded by Okoye?",
-                    Arrays.asList("Panther Squad", "The Dora Milaje", "Silver Arrows", "Wusa Crew"),
-                    1);
+            Question question4 = new Question("What is the name of the elite all-women" +
+                    " bodyguard squad commanded by Okoye?", Arrays.asList("Panther Squad",
+                    "The Dora Milaje", "Silver Arrows", "Wusa Crew"),1);
 
-            Question question5 = new Question("What advice does Okoye give to T'Challa before he jumps out of the" +
-                    " Royal Talon Flyer at the start of the movie?",
+            Question question5 = new Question("What advice does Okoye give to T'Challa " +
+                    "before he jumps out of the Royal Talon Flyer at the start of the movie?",
                     Arrays.asList("Don't freeze",
                             "Don't get seen",
                             "Make Wakanda proud",
@@ -170,7 +183,7 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                             "Contraverse Soles",
                             "Sneakers",
                             "Panther Pads"),
-                    3);
+                    2);
             Question question7 = new Question("What is the name of the legendary first" +
                     " Black Panther, who united the 5 tribes of Wakanda?",
                     Arrays.asList("Bashenga",
@@ -186,7 +199,8 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                             "S.W.O.R.D."),
                     2);
             Question question9 = new Question("Who is the other superhero, who first " +
-                    "appeared in Captain America: The First Avenger, who appears in the post-credits sequence of Black Panther?",
+                    "appeared in Captain America: The First Avenger, who appears in the post-credits " +
+                    "sequence of Black Panther?",
                     Arrays.asList("Captain America",
                             "Dum Dum Dugan",
                             "Lady Sif",
@@ -199,13 +213,12 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                             "She's his younger sister"),
                     3);
             Question question11 = new Question("What is the name of the special type of" +
-                    " beads worn by Wakandans, that can do everything from make calls to healing people?",
-                    Arrays.asList("Cull Obsidian",
-                            "Jaguar Habit",
-                            "Kimoyo Beads",
-                            "Spin Balls"),
-                    2);
-            Question question12 = new Question("What animal does W'Kabi ride " + "into battle at the end of the movie?",
+                    " beads worn by Wakandans, that can do everything from make calls to healing" +
+                    " people?",
+                    Arrays.asList("Cull Obsidian","Jaguar Habit","Kimoyo Beads",
+                    "Spin Balls"),2);
+            Question question12 = new Question("What animal does W'Kabi ride into battle at" +
+                    " the end of the movie?",
                     Arrays.asList("A hippo",
                             "An ostrich",
                             "A rhino",
@@ -225,16 +238,16 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                             "It's super sparkly",
                             "It absorbs all the energy from hits"),
                     3);
-            Question question15 = new Question("In the final big battle " +
-                    "during Black Panther, what weapon does Shuri use?",
+            Question question15 = new Question("In the final big battle during Black Panther," +
+                    " what weapon does Shuri use?",
                     Arrays.asList("An energy staff",
                             "Vibranium gauntlets",
                             "She pilots a Royal Talon Flyer",
                             "Big sword"),
                     1);
             return new QuestionBank(Arrays.asList(question1, question2, question3, question4,
-                   question5, question6, question7, question8, question9, question10, question11, question12,
-                    question13, question14, question15));
+                    question5, question6, question7, question8, question9, question10, question11,
+                    question12, question13, question14, question15));
         }
         //endregion
 
@@ -246,10 +259,9 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //close this activity
+                            //store user score in Shared Preferences
+                            mPreferences.edit().putInt(GameActivity.PREF_KEY_SCORE,mScore).apply();
                             Intent intent = new Intent();
-                            //add variable mScore to intent to pass back
-                            intent.putExtra(BUNDLE_EXTRA_SCORE, mScore);
                             setResult(RESULT_OK, intent);
                             finish();
                         }

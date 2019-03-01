@@ -1,6 +1,5 @@
 package com.fanikiosoftware.topquiz.controller;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -58,7 +57,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
     String currentName, name1, name2, name3, name4, name5;
     private Button mRankByNameBtn;
     private Button mRankByScoreBtn;
-    private Button mHomeBtn;
     private TextView tv_leader_board;
     private SharedPreferences mPreferences;
     String[][] mLeaderArray;
@@ -72,10 +70,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
         //set up buttons & text views
         mRankByNameBtn = findViewById(R.id.btn_rank_by_name);
         mRankByScoreBtn = findViewById(R.id.btn_rank_by_score);
-        mHomeBtn = findViewById(R.id.btn_home);
         tv_leader_board = findViewById(R.id.tv_leader_board);
         mRankByNameBtn.setEnabled(false);
-        mRankByScoreBtn.setEnabled(false);
         setUpListeners();
         getSavedScores();
         //show leaders ranked by score(desc) as default view
@@ -114,26 +110,26 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 showLeadersByScore();
             }
         });
-        mHomeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("LeaderBoardActivity::Setting listener onClick()-mHome");
-                Intent intent = new Intent();
-                //add variable mScore to intent to pass back
-                intent.putExtra(BUNDLE_EXTRA_SCORE1, score1);
-                intent.putExtra(BUNDLE_EXTRA_SCORE2, score2);
-                intent.putExtra(BUNDLE_EXTRA_SCORE3, score3);
-                intent.putExtra(BUNDLE_EXTRA_SCORE4, score4);
-                intent.putExtra(BUNDLE_EXTRA_SCORE5, score5);
-                intent.putExtra(BUNDLE_EXTRA_NAME1, name1);
-                intent.putExtra(BUNDLE_EXTRA_NAME2, name2);
-                intent.putExtra(BUNDLE_EXTRA_NAME3, name3);
-                intent.putExtra(BUNDLE_EXTRA_NAME4, name4);
-                intent.putExtra(BUNDLE_EXTRA_NAME5, name5);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
+//        mHomeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println("LeaderBoardActivity::Setting listener onClick()-mHome");
+//                Intent intent = new Intent();
+//                //add variable mScore to intent to pass back
+//                intent.putExtra(BUNDLE_EXTRA_SCORE1, score1);
+//                intent.putExtra(BUNDLE_EXTRA_SCORE2, score2);
+//                intent.putExtra(BUNDLE_EXTRA_SCORE3, score3);
+//                intent.putExtra(BUNDLE_EXTRA_SCORE4, score4);
+//                intent.putExtra(BUNDLE_EXTRA_SCORE5, score5);
+//                intent.putExtra(BUNDLE_EXTRA_NAME1, name1);
+//                intent.putExtra(BUNDLE_EXTRA_NAME2, name2);
+//                intent.putExtra(BUNDLE_EXTRA_NAME3, name3);
+//                intent.putExtra(BUNDLE_EXTRA_NAME4, name4);
+//                intent.putExtra(BUNDLE_EXTRA_NAME5, name5);
+//                setResult(RESULT_OK, intent);
+//                finish();
+//            }
+//        });
     }
 
     //********start methods********//

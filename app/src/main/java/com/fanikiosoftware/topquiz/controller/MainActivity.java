@@ -24,19 +24,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF_KEY_NAME  = "PREFERENCE_KEY_NAME";
     public static final String PREF_KEY_SCORE = "PREFERENCE_KEY_SCORE";
 
-    public static final String PREF_KEY_SCORE1 = "PREFERENCE_KEY_SCORE1";
-    public static final String PREF_KEY_SCORE2 = "PREFERENCE_KEY_SCORE2";
-    public static final String PREF_KEY_SCORE3 = "PREFERENCE_KEY_SCORE3";
-    public static final String PREF_KEY_SCORE4 = "PREFERENCE_KEY_SCORE4";
-    public static final String PREF_KEY_SCORE5 = "PREFERENCE_KEY_SCORE5";
-    public static final String PREF_KEY_NAME1 = "PREFERENCE_KEY_NAME1";
-    public static final String PREF_KEY_NAME2 = "PREFERENCE_KEY_NAME2";
-    public static final String PREF_KEY_NAME3 = "PREFERENCE_KEY_NAME3";
-    public static final String PREF_KEY_NAME4 = "PREFERENCE_KEY_NAME4";
-    public static final String PREF_KEY_NAME5 = "PREFERENCE_KEY_NAME5";
-
-    private static final String TAG = "MainActivity";
-
     private TextView mGreetingText;
     private EditText mNameInput;
     private Button mPlayButton;
@@ -57,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton.setEnabled(false);
         mLeaderButton.setEnabled(false);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        System.out.println("score at oncreate(): " + mPreferences.getInt(PREF_KEY_SCORE,-47));
         checkNewUser();
         mUser = new User();
         mNameInput.addTextChangedListener(new TextWatcher() {
@@ -85,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 mPreferences.edit().putString(PREF_KEY_NAME, mUser.getFirstname()).apply();
                 Intent gameActivityIntent = new Intent(MainActivity.this,
                         GameActivity.class);
-                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
+                startActivityForResult(gameActivityIntent,GAME_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -102,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     //region checkNewUser()
     private void checkNewUser() {
         String name = mPreferences.getString(PREF_KEY_NAME, null);
-        int score = mPreferences.getInt(PREF_KEY_SCORE, 21);
+        int score = mPreferences.getInt(PREF_KEY_SCORE, -1);
         //if a user name exists from prev game, greet user personally
         if(name != null){
             String welcome = getString(R.string.welcome_back_user);
@@ -117,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             mPlayButton.setEnabled(true);
         }
         //check for score,if score exists enable leader board btn
-        if(score != 21){
+        if(score > -1 && name != null){
             mLeaderButton.setEnabled(true);
         }
     }
@@ -127,40 +115,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int score = mPreferences.getInt(PREF_KEY_SCORE,-1);
         //verify that the results returned are from the proper call
         if ((GAME_ACTIVITY_REQUEST_CODE == requestCode) && (RESULT_OK == resultCode)) {
-            //proper results being returned from Game Activity results
-            //retrieve the score from the intent bundle
-            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, -1);
-            mPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
-            if (score != -1) {
+          //check for score from SharedPref and if score exists, allow Leaderboard
+           if( score > -1){
+               System.out.println("***returning from GameActivity" + score );
+                //todo sort scores here
                 mLeaderButton.setEnabled(true);
+
+
+
+
+
+
+
+
+
             }
         }else {
             if ((LEADERBOARD_ACTIVITY_REQUEST_CODE == requestCode) && (RESULT_OK == resultCode)) {
-                    //proper results being returned from LeaderBoardActivity results
-                    //retrieve the score from the intent bundle
                     System.out.println("returning from LeaderBoardActivity");
-                    int score1 = data.getIntExtra(LeaderBoardActivity.BUNDLE_EXTRA_SCORE1, 0);
-                    int score2 = data.getIntExtra(LeaderBoardActivity.BUNDLE_EXTRA_SCORE2, 0);
-                    int score3 = data.getIntExtra(LeaderBoardActivity.BUNDLE_EXTRA_SCORE3, 0);
-                    int score4 = data.getIntExtra(LeaderBoardActivity.BUNDLE_EXTRA_SCORE4, 0);
-                    int score5 = data.getIntExtra(LeaderBoardActivity.BUNDLE_EXTRA_SCORE5, 0);
-                    String name1 = data.getStringExtra(LeaderBoardActivity.BUNDLE_EXTRA_NAME1);
-                    String name2 = data.getStringExtra(LeaderBoardActivity.BUNDLE_EXTRA_NAME2);
-                    String name3 = data.getStringExtra(LeaderBoardActivity.BUNDLE_EXTRA_NAME3);
-                    String name4 = data.getStringExtra(LeaderBoardActivity.BUNDLE_EXTRA_NAME4);
-                    String name5 = data.getStringExtra(LeaderBoardActivity.BUNDLE_EXTRA_NAME5);
-                    mPreferences.edit().putInt(PREF_KEY_SCORE1, score1).apply();
-                    mPreferences.edit().putInt(PREF_KEY_SCORE2, score2).apply();
-                    mPreferences.edit().putInt(PREF_KEY_SCORE3, score3).apply();
-                    mPreferences.edit().putInt(PREF_KEY_SCORE4, score4).apply();
-                    mPreferences.edit().putInt(PREF_KEY_SCORE5, score5).apply();
-                    mPreferences.edit().putString(PREF_KEY_NAME1, name1).apply();
-                    mPreferences.edit().putString(PREF_KEY_NAME2, name2).apply();
-                    mPreferences.edit().putString(PREF_KEY_NAME3, name3).apply();
-                    mPreferences.edit().putString(PREF_KEY_NAME4, name4).apply();
-                    mPreferences.edit().putString(PREF_KEY_NAME5, name5).apply();
                 }
             }
         String tryAgain = getString(R.string.try_again_txt);
@@ -184,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        out.println("MainActivity::onDestroy()");
+        out.println("MainActivity::onDestroy()" + mPreferences.getInt(PREF_KEY_SCORE,-5));
     }
 
     @Override
