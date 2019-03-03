@@ -116,10 +116,6 @@ public class MainActivity extends AppCompatActivity {
             mNameInput.setSelection(i, i);
             mPlayButton.setEnabled(true);
         }
-        //check for score,if score exists enable leader board btn
-        if (score > -1 && name != null) {
-            mLeaderButton.setEnabled(true);
-        }
     }
 
     @Override
@@ -134,10 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 sortScores();
                 saveLeaderBoard();
                 mLeaderButton.setEnabled(true);
-            }
-        } else {
-            if ((LEADERBOARD_ACTIVITY_REQUEST_CODE == requestCode) && (RESULT_OK == resultCode)) {
-                //do something?
             }
         }
         String tryAgain = getString(R.string.try_again_txt);
