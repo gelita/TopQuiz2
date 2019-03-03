@@ -60,11 +60,13 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     //default view - leader board sorted by Score(descending)
     private void showLeadersByScore() {
-//        scoresDescending = String.format(scoresDescending, String.valueOf(mLeaderArray[0]), mLeaderArray[1],
-//               String.valueOf(mLeaderArray[2]), mLeaderArray[3], String.valueOf(mLeaderArray[4]), mLeaderArray[5],String.valueOf(mLeaderArray[6]),
-//                mLeaderArray[7],String.valueOf(mLeaderArray[8]), mLeaderArray[9]);
-//        tv_leader_board.setText(scoresDescending);
-//        mRankByNameBtn.setEnabled(true);
+        String scoresDescending = getString(R.string.tv_show_leaderboard);
+        scoresDescending = String.format(scoresDescending, String.valueOf(mLeaderArray[0]),
+                mLeaderArray[1], String.valueOf(mLeaderArray[2]), mLeaderArray[3],
+                String.valueOf(mLeaderArray[4]), mLeaderArray[5], String.valueOf(mLeaderArray[6]),
+                mLeaderArray[7], String.valueOf(mLeaderArray[8]), mLeaderArray[9]);
+        tv_leader_board.setText(scoresDescending);
+        mRankByNameBtn.setEnabled(true);
     }
 
     private void showLeadersByName() {

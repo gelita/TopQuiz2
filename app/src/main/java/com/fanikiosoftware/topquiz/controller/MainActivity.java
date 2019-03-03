@@ -116,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
             mNameInput.setSelection(i, i);
             mPlayButton.setEnabled(true);
         }
-        //check for score,if score exists enable leader board btn
-        if (score > -1 && name != null) {
-            mLeaderButton.setEnabled(true);
-        }
+//        //check for score,if score exists enable leader board btn
+//        if (score > -1 && name != null) {
+//            mLeaderButton.setEnabled(true);
+//        }
     }
 
     @Override
