@@ -24,7 +24,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private TextView tv_leader_board;
     String[] mLeaderArray;
     Intent intent;
-    String scoresDescending;
     String[][] mSortByNameArray;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +59,21 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     //default view - leader board sorted by Score(descending)
     private void showLeadersByScore() {
+        //set empty scores to "" so they do not print
+        for(int i = 0; i < mLeaderArray.length; i=i+2){
+            if(mLeaderArray[i].equals("-1")){
+                mLeaderArray[i] = "";
+                mLeaderArray[i+1]= "";
+            }
+        }
         String scoresDescending = getString(R.string.tv_show_leaderboard);
-        scoresDescending = String.format(scoresDescending, String.valueOf(mLeaderArray[0]),
-                mLeaderArray[1], String.valueOf(mLeaderArray[2]), mLeaderArray[3],
-                String.valueOf(mLeaderArray[4]), mLeaderArray[5], String.valueOf(mLeaderArray[6]),
-                mLeaderArray[7], String.valueOf(mLeaderArray[8]), mLeaderArray[9]);
+        scoresDescending = String.format(scoresDescending,
+                String.valueOf(mLeaderArray[0]), mLeaderArray[1],
+                String.valueOf(mLeaderArray[2]), mLeaderArray[3],
+                String.valueOf(mLeaderArray[4]), mLeaderArray[5],
+                String.valueOf(mLeaderArray[6]), mLeaderArray[7],
+                String.valueOf(mLeaderArray[8]), mLeaderArray[9]);
+
         tv_leader_board.setText(scoresDescending);
         mRankByNameBtn.setEnabled(true);
     }
