@@ -30,16 +30,6 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     public static final String BUNDLE_STATE_QUESTIONS =
             GameActivity.class.getCanonicalName().concat("BUNDLE_STATE_QUESTIONS");
      public static final String PREF_KEY_SCORE = "PREFERENCE_KEY_SCORE";
-//    public static final String PREF_KEY_SCORE1 = "PREFERENCE_KEY_SCORE1";
-//    public static final String PREF_KEY_SCORE2 = "PREFERENCE_KEY_SCORE2";
-//    public static final String PREF_KEY_SCORE3 = "PREFERENCE_KEY_SCORE3";
-//    public static final String PREF_KEY_SCORE4 = "PREFERENCE_KEY_SCORE4";
-//    public static final String PREF_KEY_SCORE5 = "PREFERENCE_KEY_SCORE5";
-//    public static final String PREF_KEY_NAME1 = "PREFERENCE_KEY_NAME1";
-//    public static final String PREF_KEY_NAME2 = "PREFERENCE_KEY_NAME2";
-//    public static final String PREF_KEY_NAME3 = "PREFERENCE_KEY_NAME3";
-//    public static final String PREF_KEY_NAME4 = "PREFERENCE_KEY_NAME4";
-//    public static final String PREF_KEY_NAME5 = "PREFERENCE_KEY_NAME5";
 
     private TextView mQuestionTextView;
     private Button mAnswerBtn1;
@@ -176,7 +166,7 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                             "Don't get seen",
                             "Make Wakanda proud",
                             "Fighty fighty punch punch"),
-                    1);
+                    0);
             Question question6 = new Question("What name does Shuri give to her new," +
                     " silent type of footwear that she gives to T'Challa?",
                     Arrays.asList("Hush Panthers",
