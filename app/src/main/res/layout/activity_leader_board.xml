@@ -5,31 +5,82 @@
     android:orientation="vertical">
 
     <TextView
-    android:id="@+id/tv_leader_board_title"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:gravity="center"
-    android:lineSpacingExtra="10sp"
-    android:padding="20dp"
-    android:text="@string/tv_leader_board_title"
-    android:textAllCaps="true"
-    android:textColor="@color/colorAccent"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:typeface="normal" />
+        android:id="@+id/tv_leader_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="10sp"
+        android:padding="20dp"
+        android:text="@string/tv_leader_board_title"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
 
     <TextView
-        android:id="@+id/tv_leader_board"
+        android:id="@+id/tv_leader1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="left"
+        android:layout_marginLeft="150dp"
         android:layout_marginTop="60dp"
-        android:padding="10dp"
-        android:text="@string/tv_leader_board_title"
+        android:padding="1dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
         android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/tv_leader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:padding="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/tv_leader3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:padding="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/tv_leader4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:padding="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/tv_leader5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="15dp"
+        android:padding="1dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:typeface="normal" />
 
     <Button

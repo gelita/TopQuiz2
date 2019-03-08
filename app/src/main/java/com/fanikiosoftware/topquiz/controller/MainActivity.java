@@ -20,7 +20,6 @@ import static java.lang.System.out;
 public class MainActivity extends AppCompatActivity {
 
     private static final int GAME_ACTIVITY_REQUEST_CODE = 22;
-    private static final int LEADERBOARD_ACTIVITY_REQUEST_CODE = 33;
     public static final String PREF_KEY_CURRENT_NAME = "PREFERENCE_KEY_CURRENT_NAME";
     public static final String PREF_KEY_NAME1 = "PREFERENCE_KEY_NAME1";
     public static final String PREF_KEY_NAME2 = "PREFERENCE_KEY_NAME2";
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         String tryAgain = getString(R.string.try_again_txt);
-        tryAgain = String.format(tryAgain, mPreferences.getString(PREF_KEY_CURRENT_NAME, ""));
+        tryAgain = String.format(tryAgain, mPreferences.getString(PREF_KEY_CURRENT_NAME, null));
         mGreetingText.setText(tryAgain);
     }
 
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sortScores() {
         currentScore = mPreferences.getInt(PREF_KEY_SCORE, -1);
-        currentName = mPreferences.getString(PREF_KEY_CURRENT_NAME,null);
+        currentName = mPreferences.getString(PREF_KEY_CURRENT_NAME,"");
         if (currentScore > score5) {
             score5 = currentScore;
             name5 = currentName;

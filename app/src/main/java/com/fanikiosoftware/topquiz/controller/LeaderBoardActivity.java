@@ -21,7 +21,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     private Button mRankByNameBtn;
     private Button mRankByScoreBtn;
-    private TextView tv_leader_board;
+    private TextView tv_leader1, tv_leader2, tv_leader3, tv_leader4, tv_leader5;
     String[] mLeaderArray;
     Intent intent;
     String[][] mSortByNameArray;
@@ -32,7 +32,11 @@ public class LeaderBoardActivity extends AppCompatActivity {
         //set up buttons & text views
         mRankByNameBtn = findViewById(R.id.btn_rank_by_name);
         mRankByScoreBtn = findViewById(R.id.btn_rank_by_score);
-        tv_leader_board = findViewById(R.id.tv_leader_board);
+        tv_leader1 = findViewById(R.id.tv_leader1);
+        tv_leader2 = findViewById(R.id.tv_leader2);
+        tv_leader3 = findViewById(R.id.tv_leader3);
+        tv_leader4 = findViewById(R.id.tv_leader4);
+        tv_leader5 = findViewById(R.id.tv_leader5);
         mRankByNameBtn.setEnabled(false);
         intent = getIntent();
         mLeaderArray = intent.getStringArrayExtra("sorted scores");
@@ -59,22 +63,19 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
     //default view - leader board sorted by Score(descending)
     private void showLeadersByScore() {
+        mSortByNameArray = new String[5][2];
         //set empty scores to "" so they do not print
-        for(int i = 0; i < mLeaderArray.length; i=i+2){
-            if(mLeaderArray[i].equals("-1")){
+        for (int i = 0; i < mLeaderArray.length; i = i + 2) {
+            if (mLeaderArray[i].equals("-1")) {
                 mLeaderArray[i] = "";
-                mLeaderArray[i+1]= "";
+                mLeaderArray[i + 1] = "";
             }
         }
-        String scoresDescending = getString(R.string.tv_show_leaderboard);
-        scoresDescending = String.format(scoresDescending,
-                String.valueOf(mLeaderArray[0]), mLeaderArray[1],
-                String.valueOf(mLeaderArray[2]), mLeaderArray[3],
-                String.valueOf(mLeaderArray[4]), mLeaderArray[5],
-                String.valueOf(mLeaderArray[6]), mLeaderArray[7],
-                String.valueOf(mLeaderArray[8]), mLeaderArray[9]);
-
-        tv_leader_board.setText(scoresDescending);
+        tv_leader1.setText(mLeaderArray[0] + " " + mLeaderArray[1]);
+        tv_leader2.setText(mLeaderArray[2] + " " + mLeaderArray[3]);
+        tv_leader3.setText(mLeaderArray[4] + " " + mLeaderArray[5]);
+        tv_leader4.setText(mLeaderArray[6] + " " + mLeaderArray[7]);
+        tv_leader5.setText(mLeaderArray[8] + " " + mLeaderArray[9]);
         mRankByNameBtn.setEnabled(true);
     }
 
@@ -84,22 +85,29 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 {mLeaderArray[4], mLeaderArray[5]},
                 {mLeaderArray[6], mLeaderArray[7]},
                 {mLeaderArray[8], mLeaderArray[9]}};
-        // Sort the array by players' names (column2)- class below
+        TextView[]  tvArray = {tv_leader1,tv_leader2,tv_leader3,tv_leader4,tv_leader5};
+        // Sort the array by players' names - class below
         Arrays.sort(mSortByNameArray, new ColumnComparator(1));
+        System.out.println(mSortByNameArray[0][0] + mSortByNameArray[0][1] +
+                mSortByNameArray[1][0]+mSortByNameArray[1][1]+
+                mSortByNameArray[2][0]+mSortByNameArray[2][1]+
+                mSortByNameArray[3][0]+mSortByNameArray[3][1]+
+                mSortByNameArray[4][0]+mSortByNameArray[4][1]);
         //show leader board w/names and scores in desc order by name
-        String leadersByName = getString(R.string.tv_show_leaderboard);
-        leadersByName = String.format(leadersByName, mSortByNameArray[0][0], mSortByNameArray[0][1],
-                mSortByNameArray[1][0], mSortByNameArray[1][1],
-                mSortByNameArray[2][0], mSortByNameArray[2][1],
-                mSortByNameArray[3][0], mSortByNameArray[3][1],
-                mSortByNameArray[4][0], mSortByNameArray[4][1]);
-        tv_leader_board.setText(leadersByName);
+        //if name or score empty- do not print
+        int j=0;
+        for(int i=0; i<5; i++){
+            if (!mSortByNameArray[i][0].equals("") && !mSortByNameArray[i][1].equals("")){
+                tvArray[j].setText(mSortByNameArray[i][0] + " " + mSortByNameArray[i][1]);
+                System.out.println("i="+ i + " j=" + j);
+                j++;
+            }
+        }
         mRankByScoreBtn.setEnabled(true);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //todo
         out.println("LeaderBoardActivity::onSaveInstanceState()");
         super.onSaveInstanceState(outState);
     }
@@ -145,6 +153,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
         //overriding compare method
         public int compare(Object o1, Object o2) {
+            System.out.println("-->> sorting");
             String[] row1 = (String[]) o1;
             String[] row2 = (String[]) o2;
             //compare the columns to sort
