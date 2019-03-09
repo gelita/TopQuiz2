@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     // method called upon return from Game Activity
-    //score saved and leaderboard reranked and saved to shared preferences
+    //score saved and leaderboard ranked and saved to shared preferences
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
