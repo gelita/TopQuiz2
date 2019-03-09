@@ -45,14 +45,16 @@ public class LeaderBoardActivity extends AppCompatActivity {
         showLeadersByScore();
     }
 
-    //set up onclick listeners
+    //set up btn on click listeners
     private void setUpListeners() {
+        //btn sorts leader board by name
         mRankByNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeadersByName();
             }
         });
+        //btn shows leader board by score -descending- is the default view
         mRankByScoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +81,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         mRankByNameBtn.setEnabled(true);
     }
 
+    //leader board sorted by user name -descending
     private void showLeadersByName() {
         mSortByNameArray = new String[][]{{mLeaderArray[0], mLeaderArray[1]},
                 {mLeaderArray[2], mLeaderArray[3]},
@@ -142,7 +145,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         out.println("LeaderBoardActivity::onResume()");
     }
 
-    //sorting class for name name sort
+    //sorting class for leader board sort by name method
     public class ColumnComparator implements Comparator {
 
         int columnToSort;
@@ -152,6 +155,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         }
 
         //overriding compare method
+        //compares name strings and sorts in descending order
         public int compare(Object o1, Object o2) {
             System.out.println("-->> sorting");
             String[] row1 = (String[]) o1;

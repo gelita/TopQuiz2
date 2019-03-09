@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 //do something
             }
         });
-
+        //on click listener for the btn that launches Game Activity
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
             }
         });
-
+        //on click listener for the btn that launches LeaderBoard Activity
         mLeaderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    //confirm whether or not game has been played before and greet user accordingly
     private void checkNewUser() {
         String name = mPreferences.getString(PREF_KEY_CURRENT_NAME, null);
         int score = mPreferences.getInt(PREF_KEY_SCORE, -1);
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
             mPlayButton.setEnabled(true);
         }
     }
-
+    // method called upon return from Game Activity
+    //score saved and leaderboard reranked and saved to shared preferences
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         tryAgain = String.format(tryAgain, mPreferences.getString(PREF_KEY_CURRENT_NAME, null));
         mGreetingText.setText(tryAgain);
     }
-
+    //get saved scores from shared preferences
     private void getSavedScores() {
         score1 = mPreferences.getInt(PREF_KEY_SCORE1, -1);
         score2 = mPreferences.getInt(PREF_KEY_SCORE2, -1);
@@ -149,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
         name5 = mPreferences.getString(PREF_KEY_NAME5, null);
     }
 
+
+    //sort scores by score descending
     private void sortScores() {
         currentScore = mPreferences.getInt(PREF_KEY_SCORE, -1);
         currentName = mPreferences.getString(PREF_KEY_CURRENT_NAME,"");
@@ -188,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 String.valueOf(score5), name5
         };
     }
-
+    //save scores in order by score -descending
     private void saveLeaderBoard() {
         mPreferences.edit().putString(PREF_KEY_NAME1, name1).apply();
         mPreferences.edit().putString(PREF_KEY_NAME2, name2).apply();
